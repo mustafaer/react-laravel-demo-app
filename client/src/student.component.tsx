@@ -1,8 +1,50 @@
 import React from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faSearch, faTrash} from '@fortawesome/free-solid-svg-icons'
+import {faEdit, faPlusCircle, faSearch, faTrash} from '@fortawesome/free-solid-svg-icons';
 
 export default class StudentComponent extends React.Component<any> {
+
+    students: any;
+    table = [];
+
+    getStudentsData() {
+        fetch("http://127.0.0.1:8000/api/student")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.students = result.data;
+                    for (let student of this.students) {
+                        let data = <tr>
+                            <td className="operation-button-area">
+                                <button className="btn btn-info tbl-btn" id="btn-edit" title="Düzenle">
+                                    <FontAwesomeIcon icon={faEdit}/>
+                                </button>
+                                &nbsp;
+                                <button className="btn btn-danger tbl-btn" id="btn-delete" title="Sil">
+                                    <FontAwesomeIcon icon={faTrash}/>
+                                </button>
+                            </td>
+                            <td>{student.name + ' ' + student.surname}</td>
+                            <td>{student.username}</td>
+                            <td>{student.created_at}</td>
+                            <td>{student.updated_at}</td>
+                        </tr>;
+                        console.log(data)
+                        this.table.push(data);
+                    }
+                },
+                (error) => {
+                    console.log('error')
+                }
+            ).catch(err => {
+            console.log(err);
+        });
+    }
+
+    componentDidMount() {
+        this.getStudentsData();
+    }
+
     public render() {
         return (
             <div className="main-panel-body">
@@ -32,80 +74,12 @@ export default class StudentComponent extends React.Component<any> {
                         </tr>
                         </thead>
                         <tbody>
+                        {this.table}
                         <tr>
-                            <td className="operation-button-area">
-                                <button className="btn btn-info tbl-btn" id="btn-edit" title="Düzenle">
-                                    <FontAwesomeIcon icon={faEdit}/>
-                                </button>
-                                &nbsp;
-                                <button className="btn btn-danger tbl-btn" id="btn-delete" title="Sil">
-                                    <FontAwesomeIcon icon={faTrash}/>
-                                </button>
+                            <td>
+                                <button className="btn btn-success tbl-btn" title="Ekle"><FontAwesomeIcon
+                                    icon={faPlusCircle}/></button>
                             </td>
-                            <td>Mustafa ER</td>
-                            <td>mustafaer</td>
-                            <td>11.11.2011</td>
-                            <td>11.11.2011</td>
-                        </tr>
-                        <tr>
-                            <td className="operation-button-area">
-                                <button className="btn btn-info tbl-btn" id="btn-edit" title="Düzenle">
-                                    <FontAwesomeIcon icon={faEdit}/>
-                                </button>
-                                &nbsp;
-                                <button className="btn btn-danger tbl-btn" id="btn-delete" title="Sil">
-                                    <FontAwesomeIcon icon={faTrash}/>
-                                </button>
-                            </td>
-                            <td>Mustafa ER</td>
-                            <td>mustafaer</td>
-                            <td>11.11.2011</td>
-                            <td>11.11.2011</td>
-                        </tr>
-                        <tr>
-                            <td className="operation-button-area">
-                                <button className="btn btn-info tbl-btn" id="btn-edit" title="Düzenle">
-                                    <FontAwesomeIcon icon={faEdit}/>
-                                </button>
-                                &nbsp;
-                                <button className="btn btn-danger tbl-btn" id="btn-delete" title="Sil">
-                                    <FontAwesomeIcon icon={faTrash}/>
-                                </button>
-                            </td>
-                            <td>Mustafa ER</td>
-                            <td>mustafaer</td>
-                            <td>11.11.2011</td>
-                            <td>11.11.2011</td>
-                        </tr>
-                        <tr>
-                            <td className="operation-button-area">
-                                <button className="btn btn-info tbl-btn" id="btn-edit" title="Düzenle">
-                                    <FontAwesomeIcon icon={faEdit}/>
-                                </button>
-                                &nbsp;
-                                <button className="btn btn-danger tbl-btn" id="btn-delete" title="Sil">
-                                    <FontAwesomeIcon icon={faTrash}/>
-                                </button>
-                            </td>
-                            <td>Mustafa ER</td>
-                            <td>mustafaer</td>
-                            <td>11.11.2011</td>
-                            <td>11.11.2011</td>
-                        </tr>
-                        <tr>
-                            <td className="operation-button-area">
-                                <button className="btn btn-info tbl-btn" id="btn-edit" title="Düzenle">
-                                    <FontAwesomeIcon icon={faEdit}/>
-                                </button>
-                                &nbsp;
-                                <button className="btn btn-danger tbl-btn" id="btn-delete" title="Sil">
-                                    <FontAwesomeIcon icon={faTrash}/>
-                                </button>
-                            </td>
-                            <td>Mustafa ER</td>
-                            <td>mustafaer</td>
-                            <td>11.11.2011</td>
-                            <td>11.11.2011</td>
                         </tr>
                         </tbody>
                     </table>
